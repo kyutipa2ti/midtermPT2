@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Users</title>
+
+    <style>
+        *{
+            font-family: Arial;
+            font-size: 12px;
+        }
+
+        #title{
+            font-size: 60px;
+            text-align: center;
+            margin: 0px;
+            padding-top: 20px;
+        }
+
+        #subTitle{
+            font-size: 40px;
+            text-align: center;
+            margin: 0px;
+            padding-bottom: 50px;
+        }
+
+        .user-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 50px;
+            margin-top: 0;
+        }
+
+        .user {
+            position: relative;
+            border: 3px solid #000;
+            padding: 10px;
+            margin: 3px;
+            width: 90%;
+            transition: 0.5s;
+        }
+
+        .user img {
+            position: absolute; 
+            top: 5px;
+            right: 5px;
+            width: 70px;
+            height: 70px;
+            display: block;
+            float: right;
+            border: 3px solid #000;
+        }
+
+        .user:hover{
+            box-shadow: 0 0 3px black;
+            margin-top: -10px;
+        }
+    </style>
+</head>
+<body>
+    <p id="title"> ABC Colleges </p>
+    <p id="subTitle"> Library users </p>
+
+    <div id="main">
+
+    </div>
+
+    <script>
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                myFunction(this);
+            }
+        };
+        xhttp.open("GET", "aubrey_guzman.xml", true);
+        xhttp.send();
+
+        function myFunction(xml) {
+            var xmlDoc = xml.responseXML;
+            var xmlUsers = xmlDoc.getElementsByTagName("user");
+            var output = "<div class = 'user-container'>";
+
+            for (var k=0; k < xmlUsers.length; k++){
+                var picture = xmlUsers[k].getElementsByTagName("picture")[0].childNodes[0].nodeValue;
+
+                var name = xmlUsers[k].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+
+                var course = xmlUsers[k].getElementsByTagName("course")[0].childNodes[0].nodeValue;
+
+                var yearLevelSection = xmlUsers[k].getElementsByTagName("yearLevelSection")[0].childNodes[0].nodeValue;
+
+                var adviser = xmlUsers[k].getElementsByTagName("adviser")[0].childNodes[0].nodeValue;
+
+                var schoolYear = xmlUsers[k].getElementsByTagName("schoolYear")[0].childNodes[0].nodeValue;
+
+                output += "<div class = 'user'>";
+                output += "<p> <b> Name: </b>" + name + "</p>" + "<img src = '" + picture + "' alt = 'Picture'>";
+                output += "<p> <b> Course: </b>" + course + "</p>";
+                output += "<p> <b> Year Level / Section: </b>" + yearLevelSection + "</p>";
+                output += "<p> <b> Adviser: </b>" + adviser + "</p>";
+                output += "<p> <b> School Year: </b>" + schoolYear + "</p>";
+                output += "</div>";
+            }
+            output += "</div>";
+            document.getElementById("main").innerHTML =  output; 
+        }
+    </script>
+</body>
+</html>
